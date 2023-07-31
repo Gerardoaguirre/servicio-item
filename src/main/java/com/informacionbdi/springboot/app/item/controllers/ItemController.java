@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informacionbdi.springboot.app.item.models.Item;
@@ -22,7 +24,9 @@ public class ItemController {
 	
 	
 	@GetMapping("/listar")
-	public List<Item> listar(){
+	public List<Item> listar( @RequestParam(name="nombre") String nombre, @RequestHeader(name="token-request") String token ){ //estos parametros los agrega el gateway,ya que las peticiones desde el cliente pasan por el, y a su vez los redigire aqui
+		System.out.println("nombre "+ nombre);
+		System.out.println("token request "+ token);
 		return itemService.findAll();
 	}
 	
@@ -38,7 +42,7 @@ public class ItemController {
 		
 		item.setCantidad(cantidad);
 		producto.setId(id);
-		producto.setNombre("Camar Sony");
+		producto.setNombre("Camar Sony reespuesta estatica para hace ruso de circuitbreaker");
 		producto.setPrecio(500.00);
 		item.setProducto(producto);
 		
